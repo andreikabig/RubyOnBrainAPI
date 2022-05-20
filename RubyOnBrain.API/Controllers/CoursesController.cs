@@ -6,16 +6,16 @@ using RubyOnBrain.Domain;
 
 namespace RubyOnBrain.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [ApiController] // Атрибут ApiController
+    [Route("api/[controller]")] // Маршрут контроллера
     public class CoursesController : ControllerBase
     {
+        // Сервис для работы с курсами
         private CourseService courseService;
-        private readonly DataContext db;
-        public CoursesController(CourseService courseService, DataContext context)
+
+        public CoursesController(CourseService courseService)
         { 
             this.courseService = courseService;
-            this.db = context;
         }
 
         // GET: /api/courses
