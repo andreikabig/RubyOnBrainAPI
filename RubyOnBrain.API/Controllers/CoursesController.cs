@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RubyOnBrain.API.Models;
 using RubyOnBrain.API.Services;
 using RubyOnBrain.Data;
@@ -39,6 +40,7 @@ namespace RubyOnBrain.API.Controllers
 
         // POST: /api/courses
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult<Course> AddCourse(CourseDTO course)
         {
             if (course == null)
@@ -56,6 +58,7 @@ namespace RubyOnBrain.API.Controllers
 
         // PUT: /api/courses/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateCourse(int id, CourseDTO course)
         {
             if (course == null || course.Id != id)
@@ -74,6 +77,7 @@ namespace RubyOnBrain.API.Controllers
 
         // DELETE: /api/courses/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteCourse(int id)
         { 
             bool result = courseService.DeleteCourse(id);

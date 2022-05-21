@@ -1,14 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using RubyOnBrain.API;
 using RubyOnBrain.API.Services;
 using RubyOnBrain.Data;
 using RubyOnBrain.Domain;
 
-//
+// ƒл€ междоменных запросов
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-//
+// ƒл€ междоменных запросов
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -19,6 +22,30 @@ builder.Services.AddCors(options =>
                                                   .AllowAnyMethod();
                       });
 });
+
+// —ервисы авторизации и аутентификации
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => // ƒобавление конфигурации токена options - JwtBarearOptions
+    {
+        options.TokenValidationParameters = new TokenValidationParameters   // параметры валидации токена
+        {
+            // указывает, будет ли валидироватьс€ издатель при валидации токена
+            ValidateIssuer = true,
+            // строка, представл€юща€ издател€
+            ValidIssuer = AuthOptions.ISSUER,
+            // будет ли валидироватьс€ потребитель токена
+            ValidateAudience = true,
+            // установка потребител€ токена
+            ValidAudience = AuthOptions.AUDIENCE,
+            // будет ли валидироватьс€ врем€ существовани€
+            ValidateLifetime = true,
+            // установка ключа безопасности
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            // валидаци€ ключа безопасности
+            ValidateIssuerSigningKey = true,
+        };
+    });
 
 // —трока подключени€ к Ѕƒ
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -37,9 +64,10 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-//
 app.UseCors(MyAllowSpecificOrigins);
 
+// ƒобавл€ем middleware авторизации и аутентификации
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
