@@ -3,7 +3,22 @@ using RubyOnBrain.API.Services;
 using RubyOnBrain.Data;
 using RubyOnBrain.Domain;
 
+//
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+//
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                      });
+});
 
 // Строка подключения к БД
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -17,13 +32,18 @@ builder.Services.AddControllers();
 // Добавляем зависимость CourseManager, которая позволяет работать с курсами
 builder.Services.AddScoped<CourseService>();
 
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+//
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
 

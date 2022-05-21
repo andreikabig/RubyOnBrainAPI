@@ -11,7 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubyOnBrain.Domain", "RubyO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}"
 EndProject
-
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "rubyonbrain2", "rubyonbrain2\rubyonbrain2.esproj", "{3B73B990-8D23-496E-852B-3A7D579A3FFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
