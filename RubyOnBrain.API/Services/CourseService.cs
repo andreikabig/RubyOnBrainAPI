@@ -7,6 +7,7 @@ namespace RubyOnBrain.API.Services
 {
     public class CourseService
     {
+        // Лол
         private DataContext db;
         private List<Course>? coursesList;
 
