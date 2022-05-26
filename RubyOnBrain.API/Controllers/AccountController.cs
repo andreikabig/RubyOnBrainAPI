@@ -18,9 +18,12 @@ namespace RubyOnBrain.API.Controllers
             this.db = db;
         }
 
-        [HttpPost("/token")]
+        [HttpPost("api/auth")]
         public IActionResult Token([FromBody] UserAuthDTO user)
         {
+            if (user == null)
+                return BadRequest();
+
             var identity = GetIdentity(user.Username, user.Password);
 
             if (identity == null)

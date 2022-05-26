@@ -10,8 +10,10 @@ namespace RubyOnBrain.Domain
         public string? Text { get; set; }
         public string? ImgName { get; set; }
         public string? VideoName { get; set; }
+        public int EntryTypeId { get; set; }
         [ForeignKey("EntryTypeId")]
         public EntryType EntryType { get; set; }
+        public int TopicId { get; set; }
         [ForeignKey("TopicId")]
         [JsonIgnore]
         public Topic Topic { get; set; }

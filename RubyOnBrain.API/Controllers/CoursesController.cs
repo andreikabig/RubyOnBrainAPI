@@ -89,5 +89,37 @@ namespace RubyOnBrain.API.Controllers
             return Problem($"Something went wrong. We can't find course with id {id}.");
         }
 
+
+        // GET: /api/courses/get-topics/{id}
+        [HttpGet]
+        [Authorize]
+        [Route("get-topics/{id:int}")]
+        public ActionResult<List<TopicDTO>?> GetTopics(int id)
+        {
+            List<TopicDTO>? topics = courseService.GetTopics(id, this.User);
+
+            if (topics != null)
+            {
+                return topics;
+            }
+
+            return Problem("Maybe topics are empty or you don't have access to this course!");
+
+
+        }
+
+
+        // PUT: /api/courses/add-student
+        [HttpPut]
+        [Authorize(Roles = "admin")]
+        [Route("add-student")]
+        public ActionResult AddStudent(int id, [FromBody] UserCourseDTO uc)
+        {
+            bool result = courseService.AddStudent(uc.CourseId, uc.UserId);
+
+            if (result)
+                return Ok(result);
+            return Problem($"Something went wrong, we can't add user with id {uc.UserId} to the course with id {uc.CourseId}");
+        }
     }
 }

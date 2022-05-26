@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RubyOnBrain.API.Models;
 using RubyOnBrain.Data;
 using RubyOnBrain.Domain;
+using System.Security.Claims;
 
 namespace RubyOnBrain.API.Services
 {
@@ -105,6 +107,58 @@ namespace RubyOnBrain.API.Services
                 }
             } 
             return false;
+        }
+
+        public bool AddStudent(int id, int studentId)
+        {
+            var findedUser = db?.Users.FirstOrDefault(u => u.Id == studentId);
+            var findedCourse = db?.Courses.Include(c => c.Users).FirstOrDefault(c => c.Id == id);
+
+            if (findedUser != null && findedCourse != null)
+            {
+                findedCourse.Users.Add(findedUser);
+
+                db?.Courses.Update(findedCourse);
+                db.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public List<TopicDTO>? GetTopics(int id, ClaimsPrincipal? user)
+        {
+            List<TopicDTO>? _topics = null;
+            if (user.IsInRole("admin"))
+            {
+                var findedTopics = db?.Topics.Where(t => t.CourseId == id).ToList();
+
+                foreach (var topic in findedTopics)
+                {
+                    _topics = new List<TopicDTO>();
+                    _topics.Add(new TopicDTO() { Id = topic.Id, Name = topic.Name, Rating = topic.Rating, CourseId = topic.CourseId });
+                }
+            }
+            else
+            { 
+                int userId = db.Users.FirstOrDefault(u => u.Email == user.Identity.Name).Id;
+
+                var course = db.UserCourses.FirstOrDefault(uc => uc.UserId == userId && uc.CourseId == id);
+
+                if (course != null)
+                {
+                    _topics = new List<TopicDTO>();
+                    var findedTopics = db?.Topics.Where(t => t.CourseId == id).ToList();
+
+                    foreach (var topic in findedTopics)
+                    {
+                        _topics.Add(new TopicDTO() { Id = topic.Id, Name = topic.Name, Rating = topic.Rating, CourseId = topic.CourseId });
+                    }
+                }
+
+            }
+            
+            return _topics;
         }
 
         public bool DeleteCourse(int id)
