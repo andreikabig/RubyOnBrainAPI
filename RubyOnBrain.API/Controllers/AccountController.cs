@@ -18,6 +18,7 @@ namespace RubyOnBrain.API.Controllers
             this.db = db;
         }
 
+        // POST: api/auth
         [HttpPost("api/auth")]
         public IActionResult Token([FromBody] UserAuthDTO user)
         {

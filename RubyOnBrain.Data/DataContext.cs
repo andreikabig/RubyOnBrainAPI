@@ -33,6 +33,8 @@ namespace RubyOnBrain.Data
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
         }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>()

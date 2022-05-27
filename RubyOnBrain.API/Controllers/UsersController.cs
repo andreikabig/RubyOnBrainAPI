@@ -11,6 +11,7 @@ namespace RubyOnBrain.API.Controllers
     public class UsersController : ControllerBase
     {
         // Сервис для работы с пользователями
+
         private UsersService userService;
 
         public UsersController(UsersService userService)
@@ -85,13 +86,14 @@ namespace RubyOnBrain.API.Controllers
             return Problem($"Something went wrong. We can't find user with id {id}.");
         }
 
-        // GET: /api/users/test/{id}
-        //[HttpGet]
-        ////[Authorize]
-        //[ActionName("test")]
-        //public string GetUserCourses()
-        //{
-        //    return "333FFF";
-        //}
+
+        // GET: /api/users/get-ratings
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        [Route("get-ratings")]
+        public List<UserCourse> GetRatings() 
+        {
+            return userService.GetCurrentRatings();
+        }
     }
 }

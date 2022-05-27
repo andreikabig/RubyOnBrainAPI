@@ -57,6 +57,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(conne
 builder.Services.AddControllers();
 
 // Добавляем зависимость CourseManager, которая позволяет работать с курсами
+builder.Services.AddSingleton<RecommendationService>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<UserService>();
@@ -64,9 +65,11 @@ builder.Services.AddScoped<TopicService>();
 builder.Services.AddScoped<EntryService>();
 
 
+
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+// ??
+//app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 

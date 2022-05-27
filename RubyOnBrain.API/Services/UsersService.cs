@@ -117,6 +117,11 @@ namespace RubyOnBrain.API.Services
             return false;
         }
 
+        public List<UserCourse> GetCurrentRatings()
+        {
+            return db.UserCourses.ToList();
+        }
+
         public bool UserDataValidator(UserDTO user) => (!String.IsNullOrEmpty(user.FirstName) && user.FirstName.Length > 1) &&
             (!String.IsNullOrEmpty(user.LastName) && user.LastName.Length > 1) &&
             (!String.IsNullOrEmpty(user.Password) && user.Password.Length > 7) && // Добавить Regex выражения для проверки номера телефона
