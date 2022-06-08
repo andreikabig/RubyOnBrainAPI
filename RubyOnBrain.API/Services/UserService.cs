@@ -13,7 +13,7 @@ namespace RubyOnBrain.API.Services
             this.db = db;
         }
 
-        // Метод получения данных текущего пользователя
+        // Method for retrieving current user data
         public UserDTO? GetData(string? name)
         {
             var findedUser = db?.Users.Include(r => r.Role).FirstOrDefault(u => u.Email == name);
@@ -26,7 +26,7 @@ namespace RubyOnBrain.API.Services
                 return null;
         }
 
-        // Метод обновления данных текущего пользователя
+        // Method for updating the data of the current user
         public bool UpdateUser(UserDTO user)
         {
             var findedUser = db?.Users.Include(r => r.Role).FirstOrDefault(u => u.Email == user.Email);
@@ -47,7 +47,7 @@ namespace RubyOnBrain.API.Services
             return false;
         }
 
-        // Метод получения доступных пользователю курсов
+        // The method of obtaining the courses available to the user
         public List<CourseDTO>? GetCourses(string? name)
         {
             var userId = db?.Users.FirstOrDefault(u => u.Email == name)?.Id;

@@ -10,8 +10,7 @@ namespace RubyOnBrain.API.Controllers
     [Route("/api/[controller]")]
     public class UsersController : ControllerBase
     {
-        // Сервис для работы с пользователями
-
+        // Service for working with courses
         private UsersService userService;
 
         public UsersController(UsersService userService)

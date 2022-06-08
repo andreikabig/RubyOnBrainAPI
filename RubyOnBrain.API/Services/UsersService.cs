@@ -124,7 +124,7 @@ namespace RubyOnBrain.API.Services
 
         public bool UserDataValidator(UserDTO user) => (!String.IsNullOrEmpty(user.FirstName) && user.FirstName.Length > 1) &&
             (!String.IsNullOrEmpty(user.LastName) && user.LastName.Length > 1) &&
-            (!String.IsNullOrEmpty(user.Password) && user.Password.Length > 7) && // Добавить Regex выражения для проверки номера телефона
+            (!String.IsNullOrEmpty(user.Password) && user.Password.Length > 7) && // Add Regex expressions to check the phone number
             (!String.IsNullOrEmpty(user.PhoneNumber) && user.PhoneNumber.Length >= 11);
     }
 }

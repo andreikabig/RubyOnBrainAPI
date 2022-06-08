@@ -9,7 +9,8 @@ namespace RubyOnBrain.API.Services
 {
     public class CourseService
     {
-        // Лол
+        // Service providing rate management
+
         private DataContext db;
         private List<Course>? coursesList;
 
@@ -19,6 +20,7 @@ namespace RubyOnBrain.API.Services
             GetCourses();
         }
 
+        // The method of obtaining all courses from the database using the model
         private void GetCourses()
         {
             coursesList = db?.Courses
@@ -26,6 +28,7 @@ namespace RubyOnBrain.API.Services
                 .ToList();
         }
 
+        // Method for retrieving a specific course from the database using CourseDTO
         public CourseDTO? GetCourse(int id)
         {
             var course = db?.Courses.FirstOrDefault(c => c.Id == id);
@@ -36,8 +39,10 @@ namespace RubyOnBrain.API.Services
             return null;
         }
 
+        // The method of obtaining all courses CourseDTO
         public List<CourseDTO>? GetAll() => ConvertData(coursesList);
 
+        // Method for converting a Course list into a CourseDTO
         private List<CourseDTO>? ConvertData(List<Course>? dataCourses)
         { 
             List<CourseDTO> courses = new List<CourseDTO>();
@@ -62,6 +67,7 @@ namespace RubyOnBrain.API.Services
                 return null;
         }
 
+        // Course to Course DTO conversion method (overload)
         private CourseDTO ConvertData(Course dataCourse)
         {
             return new CourseDTO()
@@ -74,6 +80,7 @@ namespace RubyOnBrain.API.Services
             };
         }
 
+        // Method for adding a course to the database
         public bool AddCourse(CourseDTO course)
         {
             var findCourse = db?.Courses.FirstOrDefault(c => c.Name == course.Name);
@@ -88,6 +95,7 @@ namespace RubyOnBrain.API.Services
             return false;
         }
 
+        // The method of changing the course in the database
         public bool ChangeCourse(CourseDTO course)
         { 
             var _course = db?.Courses.Include(p => p.ProgLang).FirstOrDefault(c => c.Id == course.Id);
@@ -109,6 +117,7 @@ namespace RubyOnBrain.API.Services
             return false;
         }
 
+        // The method of attaching the course to the user
         public bool AddStudent(int id, int studentId)
         {
             var findedUser = db?.Users.FirstOrDefault(u => u.Id == studentId);
@@ -126,6 +135,7 @@ namespace RubyOnBrain.API.Services
             return false;
         }
 
+        // The method of obtaining a topic by course id
         public List<TopicDTO>? GetTopics(int id, ClaimsPrincipal? user)
         {
             List<TopicDTO>? _topics = null;
@@ -161,6 +171,7 @@ namespace RubyOnBrain.API.Services
             return _topics;
         }
 
+        // Method of course removal
         public bool DeleteCourse(int id)
         {
             var courseDelete = db?.Courses.FirstOrDefault(c => c.Id == id);

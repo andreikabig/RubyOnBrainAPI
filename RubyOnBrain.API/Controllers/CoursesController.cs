@@ -7,11 +7,11 @@ using RubyOnBrain.Domain;
 
 namespace RubyOnBrain.API.Controllers
 {
-    [ApiController] // Атрибут ApiController
-    [Route("api/[controller]")] // Маршрут контроллера
+    [ApiController] 
+    [Route("api/[controller]")] // Controller route
     public class CoursesController : ControllerBase
     {
-        // Сервис для работы с курсами
+        // Service for working with courses
         private CourseService courseService;
 
         public CoursesController(CourseService courseService)

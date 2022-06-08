@@ -6,12 +6,13 @@ using RubyOnBrain.API.Services;
 using RubyOnBrain.Data;
 using RubyOnBrain.Domain;
 
-// ƒл€ междоменных запросов
+
+// Cross-domain queries
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ƒл€ междоменных запросов
+// Cross-domain queries
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -23,40 +24,40 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// —ервисы авторизации и аутентификации
+// Authorization and authentication services
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => // ƒобавление конфигурации токена options - JwtBarearOptions
+    .AddJwtBearer(options => // Adding options token configuration - JwtBarearOptions
     {
-        options.TokenValidationParameters = new TokenValidationParameters   // параметры валидации токена
+        options.TokenValidationParameters = new TokenValidationParameters   // token validation parameters
         {
-            // указывает, будет ли валидироватьс€ издатель при валидации токена
+            // specifies whether the publisher will be validated when validating the token
             ValidateIssuer = true,
-            // строка, представл€юща€ издател€
+            // a line representing the publisher
             ValidIssuer = AuthOptions.ISSUER,
-            // будет ли валидироватьс€ потребитель токена
+            // whether the token user will be validated
             ValidateAudience = true,
-            // установка потребител€ токена
+            // setting the token consumer
             ValidAudience = AuthOptions.AUDIENCE,
-            // будет ли валидироватьс€ врем€ существовани€
+            // will the time of existence be validated
             ValidateLifetime = true,
-            // установка ключа безопасности
+            // security key setting
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-            // валидаци€ ключа безопасности
+            // security key validation
             ValidateIssuerSigningKey = true,
         };
     });
 
-// —трока подключени€ к Ѕƒ
+// Database connection string
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// ƒобавл€ем заивисимость DataContext 
+// Add a DataContext dependency 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
 
-// ƒобавл€ем возможность использовани€ контроллеров
+// Adding the ability to use controllers
 builder.Services.AddControllers();
 
-// ƒобавл€ем зависимость CourseManager, котора€ позвол€ет работать с курсами
+// Implementing the necessary dependencies
 builder.Services.AddSingleton<RecommendationService>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<UsersService>();
@@ -68,15 +69,17 @@ builder.Services.AddScoped<EntryService>();
 
 var app = builder.Build();
 
-// ??
+// Allow HTTPS if necessary
 //app.UseHttpsRedirection();
 
+// Middleware CORS
 app.UseCors(MyAllowSpecificOrigins);
 
-// ƒобавл€ем middleware авторизации и аутентификации
+// Middleware authorization and authentication
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Middleware routing controllers
 app.MapControllers();
 
 

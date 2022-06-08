@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubyOnBrain.Data", "RubyOnB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubyOnBrain.Domain", "RubyOnBrain.Domain\RubyOnBrain.Domain.csproj", "{A0691E88-8E4B-4D66-AED0-3A18A6300D58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{A0691E88-8E4B-4D66-AED0-3A18A6300D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0691E88-8E4B-4D66-AED0-3A18A6300D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0691E88-8E4B-4D66-AED0-3A18A6300D58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E462DBD-B6EF-454B-A3A2-0D66BC3234D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

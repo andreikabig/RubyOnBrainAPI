@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace RubyOnBrain.API.Controllers
 {
-    [ApiController] // Атрибут ApiController
+    [ApiController]
     public class AccountController : ControllerBase
     {
         readonly DataContext db;

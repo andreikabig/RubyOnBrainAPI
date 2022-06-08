@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RubyOnBrain.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace RubyOnBrain.Data
 {
     public class DataContext : DbContext
     {
+        // Entity Collection
         public DbSet<Course> Courses { get; set; }
         public DbSet<Entry> Entries { get; set; }
         public DbSet<EntryType> EntryTypes { get; set; }
@@ -27,14 +24,14 @@ namespace RubyOnBrain.Data
         //        "Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=RubyOnBrainDB");
         //}
 
-        //Метод для WebApi
+        // Constructor
         public DataContext(DbContextOptions<DataContext> options)
         : base(options)
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
         }
 
-
+        // Configuring relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>()
